@@ -1,0 +1,59 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build All",
+            "command": "${workspaceFolder}/.vscode/build-all.sh",
+            "args": [
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build sandbox and engine."
+        },
+        {
+            "type": "shell",
+            "label": "Build Windows64",
+            "command": "${workspaceFolder}/.vscode/build-windows64.sh",
+            "args": [
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build sandbox and engine for Windows64."
+        },
+        {
+            "type": "shell",
+            "label": "Build Linux64",
+            "command": "${workspaceFolder}/.vscode/build-linux64.sh",
+            "args": [
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build sandbox and engine for Linux64."
+        },
+    ],
+    "version": "2.0.0"
+}
