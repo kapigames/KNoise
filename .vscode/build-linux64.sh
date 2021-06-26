@@ -11,7 +11,6 @@ mkdir -p bin/.temp/$PLATFORM
 
 echo Compiling kstd...
 g++ -pipe -Wall -std=c++17 -c "KNoise/kstd.hpp" -o "bin/.temp/$PLATFORM/kstd.o"
-g++ -pipe -Wall -std=c++17 -c "KNoise/kstd.cpp" -o "bin/.temp/$PLATFORM/kstd-cpp.o"
 
 echo KNoise...
 g++ -pipe -Wall -std=c++17 -c "KNoise/KNoise.hpp" -o "bin/.temp/$PLATFORM/KNoise.o"
