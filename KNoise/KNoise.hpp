@@ -45,7 +45,7 @@ namespace KNoise {
 
 			int AllocationSize = 32;			// How much extra memory allocate in cache array
 
-			Seed::PTable* GetPTable(int F_Seed);		// Get PTable using set seed cache
+			Seed::PTable* GetPTable(unsigned int F_Seed);		// Get PTable using set seed cache
 			Seed::PTable LastPTable;					// Last used PTable when cache is disabled
 
 			void ResetCache();							// Reset cache

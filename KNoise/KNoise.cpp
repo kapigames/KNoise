@@ -107,7 +107,7 @@ double KNoise::Perlin::GradD(int hash, double x, double y, double z) {
 
 
 
-KNoise::Perlin::Seed::PTable* KNoise::Perlin::Seed::GetPTable(int F_Seed) {
+KNoise::Perlin::Seed::PTable* KNoise::Perlin::Seed::GetPTable(unsigned int F_Seed) {
 	switch (CacheID)
 	{
 	case None:			// Seed cache is dissabled
