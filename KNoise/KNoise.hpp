@@ -1,7 +1,6 @@
 #ifndef _KNOISE_
 #define _KNOISE_
 
-#include "kstd.hpp"
 #include <vector>
 #include <random>
 #include <algorithm>
@@ -11,20 +10,30 @@
 
 namespace KNoise {
 
+    struct vec3f {
+        vec3f(float F_x,float F_y,float F_z) { x=F_x; y=F_y; z=F_z; }
+        float x, y, z;
+    };
+
+    struct vec3d {
+        vec3d(double F_x,double F_y,double F_z) { x=F_x; y=F_y; z=F_z; }
+        double x, y, z;
+    };
+
     struct Perlin {
 
 		struct Seed {
 
-			struct PTable {
-				unsigned int Seed = 0;
-				std::vector<unsigned int> Permutation;
-				bool Created = false;
+			struct PTable {								// Permutation Table ( array with random numbers )
+				unsigned int Seed = 0;					// Generated PTable seed
+				std::vector<unsigned int> Permutation;	// Permutation
+				bool Created = false;					// Was PTable generated?
 
 				PTable(int F_Seed);				// Generate new PTable
 				PTable();						// Allocate memory for PTable
 			};
 			
-			enum CacheType {
+			enum CacheType {		// Seed cache types, Deafult is recomended
 				None,				// Seed cache is disabled
 				Deafult,			// Deafult seed cache cache is stored in array which is then searched to find ptable
 				Fast,				// Seed = cache array index much faster but uses alot of memory if not used corectly
@@ -35,10 +44,10 @@ namespace KNoise {
 
 			CacheType CacheID = None;			// Currently used seed cache
 
-			int AllocationSize = 32;
+			int AllocationSize = 32;			// How much extra memory allocate in cache array
 
 			Seed::PTable* GetPTable(int F_Seed);		// Get PTable using set seed cache
-			Seed::PTable LastPTable;
+			Seed::PTable LastPTable;					// Last used PTable when cache is disabled
 
 			void ResetCache();							// Reset cache
 			void SetCacheType(CacheType F_CacheID);		// Set cache type
@@ -46,8 +55,8 @@ namespace KNoise {
 
 		Seed Seed;
 
-		float Get(kstd::vec3f F_Position, int F_Seed);
-		double Get(kstd::vec3d F_Position, int F_Seed);
+		float Get(vec3f F_Position, int F_Seed);
+		double Get(vec3d F_Position, int F_Seed);
 
     private:
 		float Fade(float t);
