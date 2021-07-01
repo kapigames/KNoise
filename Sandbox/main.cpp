@@ -1,5 +1,8 @@
 #include "KNoise.hpp"
 #include <iostream>
+#include <chrono>
+#include <thread>
+
 
 int main() {
     KNoise::Perlin Noise;

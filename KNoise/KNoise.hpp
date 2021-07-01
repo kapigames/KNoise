@@ -5,7 +5,6 @@
 #include <random>
 #include <algorithm>
 #include <numeric>
-#include <future>
 
 
 namespace KNoise {
