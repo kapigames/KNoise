@@ -9,9 +9,6 @@ mkdir -p bin/$PLATFORM/Sandbox
 mkdir -p bin/.temp/$PLATFORM
 
 
-echo Compiling kstd...
-x86_64-w64-mingw32-g++ -pipe -Wall -std=c++17 -c "KNoise/kstd.hpp" -o "bin/.temp/$PLATFORM/kstd.o"
-
 echo KNoise...
 x86_64-w64-mingw32-g++ -pipe -Wall -std=c++17 -c "KNoise/KNoise.hpp" -o "bin/.temp/$PLATFORM/KNoise.o"
 x86_64-w64-mingw32-g++ -pipe -Wall -std=c++17 -c "KNoise/KNoise.cpp" -o "bin/.temp/$PLATFORM/KNoise-cpp.o"
