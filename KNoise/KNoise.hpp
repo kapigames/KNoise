@@ -10,13 +10,13 @@
 
 namespace KNoise {
 
-    struct vec3f {
-        vec3f(float F_x,float F_y,float F_z) { x=F_x; y=F_y; z=F_z; }
+    struct Vec3f {
+        Vec3f(float F_x,float F_y,float F_z) { x=F_x; y=F_y; z=F_z; }
         float x, y, z;
     };
 
-    struct vec3d {
-        vec3d(double F_x,double F_y,double F_z) { x=F_x; y=F_y; z=F_z; }
+    struct Vec3d {
+        Vec3d(double F_x,double F_y,double F_z) { x=F_x; y=F_y; z=F_z; }
         double x, y, z;
     };
 
@@ -55,8 +55,8 @@ namespace KNoise {
 
 		Seed Seed;
 
-		float Get(vec3f F_Position, int F_Seed);
-		double Get(vec3d F_Position, int F_Seed);
+		float Get(Vec3f F_Position, int F_Seed);		// Get noise value for set seed and position
+		double Get(Vec3d F_Position, int F_Seed);		// Get double precision noise value for set seed and position
 
     private:
 		float Fade(float t);

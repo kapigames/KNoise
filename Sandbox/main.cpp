@@ -12,7 +12,7 @@ int main() {
         for (size_t y = 0; y < 100; y++)
         {
             
-            float a = Noise.Get(kstd::vec3f(x/20.f, y/20.f, 0.0), 0);
+            float a = Noise.Get(KNoise::Vec3f(x/20.f, y/20.f, 0.0), 0);
             int b = int(a * 10.f);
 
             switch (b)

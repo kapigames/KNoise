@@ -1,7 +1,7 @@
 #include "KNoise.hpp"
 
 
-float KNoise::Perlin::Get(kstd::vec3f F_Position, int F_Seed) {
+float KNoise::Perlin::Get(KNoise::Vec3f F_Position, int F_Seed) {
 	Seed::PTable* Permutation = Seed.GetPTable(F_Seed); // Generate new permutation layer when seed changed
 
 	// Find the unit cube that contains the point
@@ -54,7 +54,7 @@ float KNoise::Perlin::Grad(int hash, float x, float y, float z) {
 
 
 
-double KNoise::Perlin::Get(kstd::vec3d F_Position, int F_Seed) {
+double KNoise::Perlin::Get(KNoise::Vec3d F_Position, int F_Seed) {
 	Seed::PTable* Permutation = Seed.GetPTable(F_Seed); // Generate new permutation layer when seed changed
 
 	// Find the unit cube that contains the point
