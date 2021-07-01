@@ -1,8 +1,3 @@
-// Deafult class for other noise classes
-// This makes changing noise type easier
-// (if they would exist)
-
-
 #ifndef _KNOISE_
 #define _KNOISE_
 
