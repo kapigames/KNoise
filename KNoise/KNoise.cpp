@@ -110,44 +110,44 @@ double KNoise::Perlin::GradD(int hash, double x, double y, double z) {
 KNoise::Perlin::Seed::PTable* KNoise::Perlin::Seed::GetPTable(int F_Seed) {
 	switch (CacheID)
 	{
-	case None:
-		LastPTable = PTable(F_Seed);
-		return &LastPTable;
+	case None:			// Seed cache is dissabled
+		LastPTable = PTable(F_Seed);	// Generate PTable
+		return &LastPTable;				// Return PTable pointer
 
-	case Deafult:
-		for (unsigned int i = 0; i < Cache.size(); i++)
+	case Deafult:		// Deafult seed cache
+		for (unsigned int i = 0; i < Cache.size(); i++)	// Cycle through cache array
 		{
-			if (Cache[i].Seed == F_Seed) {
-				return &Cache[i];
+			if (Cache[i].Seed == F_Seed) {				// Try to find permutation with set seed
+				return &Cache[i];						// If found return PTable cache array pointer
 			}
 		}
-		Cache.reserve((unsigned int)ceil(Cache.size() / AllocationSize) * AllocationSize);
-		Cache.push_back(PTable(F_Seed));
-		return &Cache[Cache.size() - 1];
+		Cache.reserve((unsigned int)ceil(Cache.size() / AllocationSize) * AllocationSize);	// If not found allocate more memory in cache array
+		Cache.push_back(PTable(F_Seed));													// Generate new PTable
+		return &Cache[Cache.size() - 1];													// Return PTable pointer
 
-	case Fast:
-		if (F_Seed+1 > Cache.size()) { Cache.resize(F_Seed + AllocationSize); }
-		if (Cache[F_Seed].Created == false) { Cache[F_Seed] = PTable(F_Seed); }
-		return &Cache[F_Seed];
+	case Fast:			// Fast seed cache
+		if (F_Seed+1 > Cache.size()) { Cache.resize(F_Seed + AllocationSize); }		// If seed is bigger than cache array resize array
+		if (Cache[F_Seed].Created == false) { Cache[F_Seed] = PTable(F_Seed); }		// If PTable is not generated generate PTable
+		return &Cache[F_Seed];														// Return PTable cache array pointer
 
-	case Experimental:
-		CacheID = None;
+	case Experimental:	// Expertimental seed cache ( Currently does nothing )
+		CacheID = None;				// Disable seed cache
 		return GetPTable(F_Seed);
 
-	default:
-		CacheID = None;
+	default:			// Undefined seed cache
+		CacheID = None;				// Disable seed cache
 		return GetPTable(F_Seed);
 	}
 }
 
 
 
-void KNoise::Perlin::Seed::SetCacheType(CacheType F_CacheID) { ResetCache(); CacheID = F_CacheID; }
-void KNoise::Perlin::Seed::ResetCache() { Cache.clear(); }
+void KNoise::Perlin::Seed::SetCacheType(CacheType F_CacheID) { ResetCache(); CacheID = F_CacheID; }	// Reset cache and change CacheID
+void KNoise::Perlin::Seed::ResetCache() { Cache.clear(); }											// Clear cache array
 
 
 
-KNoise::Perlin::Seed::PTable::PTable() { Permutation.reserve(256); }
+KNoise::Perlin::Seed::PTable::PTable() { Permutation.reserve(256); }	// Allocate memory for permutation
 KNoise::Perlin::Seed::PTable::PTable(int F_Seed) {
 	Seed = F_Seed;
 
