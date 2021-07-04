@@ -1,3 +1,4 @@
+#include "Perlin.hpp"
 #include "KNoise.hpp"
 #include <iostream>
 #include <chrono>
@@ -7,16 +8,15 @@
 int main() {
     KNoise::Perlin Noise;
 
-    int x = 0;
+    Noise.SetCacheType(Noise.FastArray);
 
-    while (true)
+    for (size_t x = 0; x < 100; x++)
     {
-
         for (size_t y = 0; y < 100; y++)
         {
-            
-            float a = Noise.Get(KNoise::Vec3f(x/20.f, y/20.f, 0.0), 0);
-            int b = int(a * 10.f);
+                
+            float a = Noise.Get(KNoise::Vec3f(x/10.f, y/10.f, 0.0), KNoise::ToSeed("a")); // Seed cant be 0 from this release due to changes in code
+            int b = round(a * 10.f);
 
             switch (b)
             {
@@ -60,10 +60,9 @@ int main() {
 
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(20));
         std::cout << std::endl;
-        x++;
-        
+         
     }
     
     

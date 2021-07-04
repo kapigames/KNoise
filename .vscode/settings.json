@@ -46,6 +46,15 @@
         "typeinfo": "cpp",
         "cinttypes": "cpp",
         "ctime": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "chrono": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "condition_variable": "cpp",
+        "ratio": "cpp",
+        "future": "cpp",
+        "mutex": "cpp",
+        "ranges": "cpp",
+        "stop_token": "cpp"
     }
 }

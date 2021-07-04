@@ -12,10 +12,12 @@ mkdir -p bin/.temp/$PLATFORM
 echo KNoise...
 g++ -pipe -Wall -std=c++17 -c "KNoise/KNoise.hpp" -o "bin/.temp/$PLATFORM/KNoise.o"
 g++ -pipe -Wall -std=c++17 -c "KNoise/KNoise.cpp" -o "bin/.temp/$PLATFORM/KNoise-cpp.o"
+g++ -pipe -Wall -std=c++17 -c "KNoise/Perlin.hpp" -o "bin/.temp/$PLATFORM/Perlin.o"
+g++ -pipe -Wall -std=c++17 -c "KNoise/Perlin.cpp" -o "bin/.temp/$PLATFORM/Perlin-cpp.o"
 
 
 echo Creating library...
-ar rcs "bin/$PLATFORM/KNoise/libKNoise.a" "bin/.temp/$PLATFORM/kstd.o" "bin/.temp/$PLATFORM/kstd-cpp.o" "bin/.temp/$PLATFORM/KNoise.o" "bin/.temp/$PLATFORM/KNoise-cpp.o"
+ar rcs "bin/$PLATFORM/KNoise/libKNoise.a" "bin/.temp/$PLATFORM/KNoise.o" "bin/.temp/$PLATFORM/KNoise-cpp.o" "bin/.temp/$PLATFORM/Perlin.o" "bin/.temp/$PLATFORM/Perlin-cpp.o"
 
 
 echo Compiling sandbox...
