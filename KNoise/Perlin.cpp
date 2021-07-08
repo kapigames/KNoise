@@ -11,23 +11,23 @@ void KNoise::Perlin::SetCacheType(int F_CacheType) {
 	switch (F_CacheType)
 	{
 	case Disabled:
-		Seed = std::make_unique<DisabledCacheStrategy>();
+		Seed = std::make_unique<DisabledCache>();
 		break;
 	
 	case Single:
-		Seed = std::make_unique<SingleCacheStrategy>();
+		Seed = std::make_unique<SingleCache>();
 		break;
 	
 	case Array:
-		Seed = std::make_unique<ArrayCacheStrategy>();
+		Seed = std::make_unique<ArrayCache>();
 		break;
 	
 	case FastArray:
-		Seed = std::make_unique<FastArrayCacheStrategy>();
+		Seed = std::make_unique<FastArrayCache>();
 		break;
 	
 	case Experimental:
-		Seed = std::make_unique<ArrayCacheStrategy>();
+		Seed = std::make_unique<ArrayCache>();
 		break;
 	
 	default:
@@ -186,26 +186,26 @@ KNoise::Perlin::SeedCache::PTable::PTable(unsigned int F_Seed) {
 
 
 
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::DisabledCacheStrategy::GetPTable(unsigned int F_Seed) {
+KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::DisabledCache::GetPTable(unsigned int F_Seed) {
 	return new PTable(F_Seed);
 }
 
-void KNoise::Perlin::DisabledCacheStrategy::Clear() {}
+void KNoise::Perlin::DisabledCache::Clear() {}
 
 
 
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::SingleCacheStrategy::GetPTable(unsigned int F_Seed) {
+KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::SingleCache::GetPTable(unsigned int F_Seed) {
 	if(LastPTable.Seed != F_Seed) LastPTable = PTable(F_Seed);
 	return &LastPTable;
 }
 
-void KNoise::Perlin::SingleCacheStrategy::Clear() {
+void KNoise::Perlin::SingleCache::Clear() {
 	LastPTable = 0;
 }
 
 
 
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ArrayCacheStrategy::GetPTable(unsigned int F_Seed) {
+KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ArrayCache::GetPTable(unsigned int F_Seed) {
 	for (unsigned int i = 0; i < Cache.size(); i++)	// Cycle through cache array
 	{
 		if (Cache[i].Seed == F_Seed) {				// Try to find permutation with set seed
@@ -217,29 +217,29 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ArrayCacheStrategy::GetPTable
 	return &Cache[Cache.size() - 1];													// Return PTable pointer
 }
 
-void KNoise::Perlin::ArrayCacheStrategy::Clear() {
+void KNoise::Perlin::ArrayCache::Clear() {
 	Cache.clear();
 }
 
 
 
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::FastArrayCacheStrategy::GetPTable(unsigned int F_Seed) {
+KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::FastArrayCache::GetPTable(unsigned int F_Seed) {
 		if (F_Seed+1 > Cache.size()) { Cache.resize(F_Seed + PERLIN_ALLOCATION_SIZE); }	// If seed is bigger than cache array resize array
 		if (Cache[F_Seed].Created == false) { Cache[F_Seed] = PTable(F_Seed); }			// If PTable is not generated generate PTable
 		return &Cache[F_Seed];															// Return PTable cache array pointer												// Return PTable pointer
 }
 
-void KNoise::Perlin::FastArrayCacheStrategy::Clear() {
+void KNoise::Perlin::FastArrayCache::Clear() {
 	Cache.clear();
 }
 
 
 
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ExperimentalCacheStrategy::GetPTable(unsigned int F_Seed) {
+KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ExperimentalCache::GetPTable(unsigned int F_Seed) {
 	if(LastPTable.Seed != F_Seed) LastPTable = PTable(F_Seed);
 	return &LastPTable;
 }
 
-void KNoise::Perlin::ExperimentalCacheStrategy::Clear() {
+void KNoise::Perlin::ExperimentalCache::Clear() {
 	LastPTable = 0;
 }

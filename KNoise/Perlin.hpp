@@ -28,8 +28,8 @@ namespace KNoise {
 								// Currently nothing is tested here if selected enables array cache
 		};
 
-		void SetCacheType(int F_CacheType);
-		void ClearCache();
+		void SetCacheType(int F_CacheType);						// Sets cache type
+		void ClearCache();										// Clears cache (dosent do anything in some cache types)
 		
 		float Get(Vec3f F_Position, unsigned int F_Seed);		// Get noise value for set seed and position
 		double Get(Vec3d F_Position, unsigned int F_Seed);		// Get double precision noise value for set seed and position
@@ -39,7 +39,7 @@ namespace KNoise {
 
     private:
 
-		struct SeedCache {
+		struct SeedCache {								// Main class for other cache types
 
 			struct PTable {								// Permutation Table ( array with random numbers )
 				unsigned int Seed = 0;					// Generated PTable seed
@@ -50,40 +50,40 @@ namespace KNoise {
 				PTable();								// Allocate memory for PTable
 			};
 
-			// Thiese functions are implemented by other cache strategies
+			// These functions are implemented by other cache types
 			virtual PTable* GetPTable(unsigned int F_Seed) = 0;	// This function returns PTable for given seed
 			virtual void Clear() = 0;							// This function clears cache (if there is any cache)
 
 		};
 
 
-		struct DisabledCacheStrategy : public SeedCache {
+		struct DisabledCache : public SeedCache {		// Disabled
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
 		};
 
-		struct SingleCacheStrategy : public SeedCache {
+		struct SingleCache : public SeedCache {			// Stores last generated PTable
 			PTable LastPTable;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
 		};
 
-		struct ArrayCacheStrategy : public SeedCache {
+		struct ArrayCache : public SeedCache {			// Stores all generated PTables and thes searches through them can be slow with alot of cached PTables
 			std::vector<PTable> Cache;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
 		};
 
-		struct FastArrayCacheStrategy : public SeedCache {
+		struct FastArrayCache : public SeedCache {		// Same as upper cache type but seed is index of cache array removing the need for searching
 			std::vector<PTable> Cache;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
 		};
 
-		struct ExperimentalCacheStrategy : public SeedCache {
+		struct ExperimentalCache : public SeedCache {	// Same as single cache type currently
 			PTable LastPTable;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
@@ -91,13 +91,14 @@ namespace KNoise {
 		};
 
 
-		std::unique_ptr<SeedCache> Seed;
+		std::unique_ptr<SeedCache> Seed;	// Current cache type
 
-
+		// These functions are used by Get() function to generate noise
 		float Fade(float t);
 		float Lerp(float t, float a, float b);
 		float Grad(int hash, float x, float y, float z);
 
+		// Double precision version
 		double FadeD(double t);
 		double LerpD(double t, double a, double b);
 		double GradD(int hash, double x, double y, double z);
