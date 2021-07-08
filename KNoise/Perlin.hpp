@@ -25,7 +25,7 @@ namespace KNoise {
 			FastArray,			// Seed is index of cache array removing need for searching array
 								// Faster with large numbers of cached seeds but uses more memory if used incorectly
 			Experimental		// Experimental cache implementations that will probably be implemented later after fixing bugs
-								// Currently nothing is tested here if selected enables array cache
+								// Currently nothing is tested here if selected behaves as single cache
 		};
 
 		void SetCacheType(int F_CacheType);						// Sets cache type
