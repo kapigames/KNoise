@@ -235,11 +235,8 @@ void KNoise::Perlin::FastArrayCache::Clear() {
 
 
 
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ExperimentalCache::GetPTable(unsigned int F_Seed) {
-	if(LastPTable.Seed != F_Seed) LastPTable = PTable(F_Seed);
-	return &LastPTable;
+/*KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ExperimentalCache::GetPTable(unsigned int F_Seed) {
 }
 
 void KNoise::Perlin::ExperimentalCache::Clear() {
-	LastPTable = 0;
-}
+}*/

@@ -63,31 +63,34 @@ namespace KNoise {
 		};
 
 		struct SingleCache : public SeedCache {			// Stores last generated PTable
-			PTable LastPTable;
-
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
+		
+		private:
+			PTable LastPTable;
 		};
 
 		struct ArrayCache : public SeedCache {			// Stores all generated PTables and thes searches through them can be slow with alot of cached PTables
-			std::vector<PTable> Cache;
-
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
+		
+		private:
+			std::vector<PTable> Cache;
 		};
 
 		struct FastArrayCache : public SeedCache {		// Same as upper cache type but seed is index of cache array removing the need for searching
-			std::vector<PTable> Cache;
-
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
+		
+		private:
+			std::vector<PTable> Cache;
 		};
 
 		struct ExperimentalCache : public SeedCache {	// Same as single cache type currently
-			PTable LastPTable;
-
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
+		
+		private:
 		};
 
 
