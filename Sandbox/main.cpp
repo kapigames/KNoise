@@ -7,14 +7,17 @@
 
 int main() {
     KNoise::Perlin Noise;
+    Noise.SetCacheType(Noise.Experimental);
 
     size_t y = 0;
+    size_t seed = 200000;
     while (true)
     {
+
         for (size_t x = 0; x < 188; x++)
         {
                 
-            float a = Noise.Get(KNoise::Vec3f(x/60.f, y/60.f, 0.0), KNoise::ToSeed("seed")); // Seed cant be 0 from this release due to changes in code
+            float a = Noise.Get(KNoise::Vec3f(x/60.f, y/60.f, 0.0), seed); // Seed cant be 0 from this release due to changes in code
             int b = round(a * 15.f);
             
             switch (b)

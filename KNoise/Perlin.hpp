@@ -86,11 +86,13 @@ namespace KNoise {
 			std::vector<PTable> Cache;
 		};
 
-		struct ExperimentalCache : public SeedCache {	// Same as single cache type currently
+		struct ExperimentalCache : public SeedCache {	// Testing improved FastArrayCache
 			PTable* GetPTable(unsigned int F_Seed) override;
 			void Clear() override;
 		
 		private:
+			unsigned int FirstSeed = (unsigned int)-1;
+			std::vector<PTable> Cache;
 		};
 
 
