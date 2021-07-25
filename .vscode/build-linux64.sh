@@ -15,7 +15,7 @@ g++ -pipe -Wall -std=c++17 -c "KNoise/Perlin.cpp" -o "bin/.temp/$PLATFORM/Perlin
 
 
 echo Creating library...
-ar rcs "bin/$PLATFORM/KNoise/libKNoise.a" "bin/.temp/$PLATFORM/KNoise-cpp.o" "bin/.temp/$PLATFORM/Perlin-cpp.o"
+ar rcs "bin/$PLATFORM/KNoise/libKNoise.a" "bin/.temp/$PLATFORM/KNoise.o" "bin/.temp/$PLATFORM/Perlin.o"
 
 
 echo Compiling sandbox...
