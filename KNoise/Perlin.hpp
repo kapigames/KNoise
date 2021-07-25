@@ -83,6 +83,7 @@ namespace KNoise {
 			void Clear() override;
 		
 		private:
+			unsigned int FirstSeed = (unsigned int)-1;
 			std::vector<PTable> Cache;
 		};
 

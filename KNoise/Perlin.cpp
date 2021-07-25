@@ -224,9 +224,10 @@ void KNoise::Perlin::ArrayCache::Clear() {
 
 
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::FastArrayCache::GetPTable(unsigned int F_Seed) {
-	if (F_Seed+1 > Cache.size()) { Cache.resize(F_Seed + PERLIN_ALLOCATION_SIZE); }	// If seed is bigger than cache array resize array
-	if (Cache[F_Seed].Created == false) { Cache[F_Seed] = PTable(F_Seed); }			// If PTable is not generated generate PTable
-	return &Cache[F_Seed];															// Return PTable cache array pointer
+	if (F_Seed < FirstSeed) { FirstSeed = F_Seed; Clear(); }	// TODO: repleace Clear() with something more eficient like shifting vector by needed amount
+	if (F_Seed+1-FirstSeed > Cache.size()) { Cache.resize(F_Seed-FirstSeed + PERLIN_ALLOCATION_SIZE); }		// If seed is bigger than cache array resize array
+	if (Cache[F_Seed-FirstSeed].Created == false) { Cache[F_Seed-FirstSeed] = PTable(F_Seed); }				// If PTable is not generated generate PTable
+	return &Cache[F_Seed-FirstSeed];																		// Return PTable cache array pointer
 }
 
 void KNoise::Perlin::FastArrayCache::Clear() {
