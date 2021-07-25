@@ -1,4 +1,5 @@
 PLATFORM="windows64"
+CPPSTD="c++17"
 
 echo Preparing compile for $PLATFORM...
 
@@ -10,8 +11,8 @@ mkdir -p bin/.temp/$PLATFORM
 
 
 echo KNoise...
-x86_64-w64-mingw32-g++ -pipe -Wall -std=c++17 -c "KNoise/KNoise.cpp" -o "bin/.temp/$PLATFORM/KNoise.o"
-x86_64-w64-mingw32-g++ -pipe -Wall -std=c++17 -c "KNoise/Perlin.cpp" -o "bin/.temp/$PLATFORM/Perlin.o"
+x86_64-w64-mingw32-g++ -pipe -Wall -std=$CPPSTD -c "KNoise/KNoise.cpp" -o "bin/.temp/$PLATFORM/KNoise.o"
+x86_64-w64-mingw32-g++ -pipe -Wall -std=$CPPSTD -c "KNoise/Perlin.cpp" -o "bin/.temp/$PLATFORM/Perlin.o"
 
 
 echo Creating library...
@@ -20,6 +21,6 @@ x86_64-w64-mingw32-ar rcs "bin/$PLATFORM/KNoise/libKNoise.a" "bin/.temp/$PLATFOR
 
 echo Compiling sandbox...
 
-x86_64-w64-mingw32-g++ -pipe -Wall -std=c++17 "Sandbox/main.cpp" -IKNoise/ -Lbin/$PLATFORM/KNoise/ -lKNoise  -o "bin/$PLATFORM/Sandbox/Sandbox"
+x86_64-w64-mingw32-g++ -pipe -Wall -std=$CPPSTD "Sandbox/main.cpp" -IKNoise/ -Lbin/$PLATFORM/KNoise/ -lKNoise  -o "bin/$PLATFORM/Sandbox/Sandbox"
 
 echo $PLATFORM compile done.

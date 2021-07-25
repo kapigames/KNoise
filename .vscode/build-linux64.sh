@@ -1,4 +1,5 @@
 PLATFORM="linux64"
+CPPSTD="c++17"
 
 echo Preparing compile for $PLATFORM...
 
@@ -10,8 +11,8 @@ mkdir -p bin/.temp/$PLATFORM
 
 
 echo KNoise...
-g++ -pipe -Wall -std=c++17 -c "KNoise/KNoise.cpp" -o "bin/.temp/$PLATFORM/KNoise.o"
-g++ -pipe -Wall -std=c++17 -c "KNoise/Perlin.cpp" -o "bin/.temp/$PLATFORM/Perlin.o"
+g++ -pipe -Wall -std=$CPPSTD -c "KNoise/KNoise.cpp" -o "bin/.temp/$PLATFORM/KNoise.o"
+g++ -pipe -Wall -std=$CPPSTD -c "KNoise/Perlin.cpp" -o "bin/.temp/$PLATFORM/Perlin.o"
 
 
 echo Creating library...
@@ -20,7 +21,7 @@ ar rcs "bin/$PLATFORM/KNoise/libKNoise.a" "bin/.temp/$PLATFORM/KNoise.o" "bin/.t
 
 echo Compiling sandbox...
 
-g++ -pipe -Wall -std=c++17 "Sandbox/main.cpp" -IKNoise/ -Lbin/$PLATFORM/KNoise/ -lKNoise  -o "bin/$PLATFORM/Sandbox/Sandbox"
+g++ -pipe -Wall -std=$CPPSTD "Sandbox/main.cpp" -IKNoise/ -Lbin/$PLATFORM/KNoise/ -lKNoise  -o "bin/$PLATFORM/Sandbox/Sandbox"
 chmod +x "bin/$PLATFORM/Sandbox/Sandbox"
 
 echo $PLATFORM compile done.
