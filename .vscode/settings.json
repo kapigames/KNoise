@@ -55,6 +55,11 @@
         "future": "cpp",
         "mutex": "cpp",
         "ranges": "cpp",
-        "stop_token": "cpp"
+        "stop_token": "cpp",
+        "codecvt": "cpp",
+        "cstring": "cpp",
+        "list": "cpp",
+        "map": "cpp",
+        "iomanip": "cpp"
     }
 }
