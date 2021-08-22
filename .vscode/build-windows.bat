@@ -22,6 +22,6 @@ ar rcs "bin/%PLATFORM%/KNoise/libKNoise.a" "bin/.temp/%PLATFORM%/KNoise.o" "bin/
 
 echo Compiling sandbox...
 
-g++ -pipe -Wall -std=%CPPSTD% "Sandbox/main.cpp" -IKNoise/ -Lbin/%PLATFORM%/KNoise/ -lKNoise  -o "bin/%PLATFORM%/Sandbox/Sandbox"
+g++ -pipe -Wall -std=%CPPSTD% "Sandbox/main.cpp" -static -IKNoise/ -Lbin/%PLATFORM%/KNoise/ -lKNoise  -o "bin/%PLATFORM%/Sandbox/Sandbox"
 
 echo %PLATFORM% compile done.
