@@ -1,5 +1,6 @@
-#ifndef _KNOISE_
-#define _KNOISE_
+#pragma once
+
+#define __KNOISE__ 2.1
 
 #include <iostream>
 #include <string>
@@ -20,5 +21,3 @@ namespace KNoise {
     };
 
 }
-
-#endif

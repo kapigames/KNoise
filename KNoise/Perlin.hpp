@@ -1,5 +1,4 @@
-#ifndef _KNOISE_PERLIN_
-#define _KNOISE_PERLIN_
+#pragma once
 
 #include "KNoise.hpp"
 #include <vector>
@@ -29,6 +28,8 @@ namespace KNoise {
 		};
 
 		void SetCacheType(int F_CacheType);						// Sets cache type
+		int GetCacheType();										// Returns cache type
+		size_t 	GetCacheSize();									// Returns cache size (if any)
 		void ClearCache();										// Clears cache (dosent do anything in some cache types)
 		
 		float Get(Vec3f F_Position, unsigned int F_Seed);		// Get noise value for set seed and position
@@ -52,18 +53,24 @@ namespace KNoise {
 
 			// These functions are implemented by other cache types
 			virtual PTable* GetPTable(unsigned int F_Seed) = 0;	// This function returns PTable for given seed
-			virtual void Clear() = 0;							// This function clears cache (if there is any cache)
+			virtual CacheType GetCacheType() = 0;				// Returns cache type
+			virtual size_t 	GetCacheSize() = 0;					// Returns cache size (if any)
+			virtual void 	Clear() = 0;						// This function clears cache (if there is any cache)
 
 		};
 
 
 		struct DisabledCache : public SeedCache {		// Disabled
 			PTable* GetPTable(unsigned int F_Seed) override;
+			CacheType GetCacheType() override;
+			size_t 	GetCacheSize() override;
 			void Clear() override;
 		};
 
 		struct SingleCache : public SeedCache {			// Stores last generated PTable
 			PTable* GetPTable(unsigned int F_Seed) override;
+			CacheType GetCacheType() override;
+			size_t 	GetCacheSize() override;
 			void Clear() override;
 		
 		private:
@@ -72,6 +79,8 @@ namespace KNoise {
 
 		struct ArrayCache : public SeedCache {			// Stores all generated PTables and thes searches through them can be slow with alot of cached PTables
 			PTable* GetPTable(unsigned int F_Seed) override;
+			CacheType GetCacheType() override;
+			size_t 	GetCacheSize() override;
 			void Clear() override;
 		
 		private:
@@ -80,6 +89,8 @@ namespace KNoise {
 
 		struct FastArrayCache : public SeedCache {		// Same as upper cache type but seed is index of cache array removing the need for searching
 			PTable* GetPTable(unsigned int F_Seed) override;
+			CacheType GetCacheType() override;
+			size_t 	GetCacheSize() override;
 			void Clear() override;
 		
 		private:
@@ -89,6 +100,8 @@ namespace KNoise {
 
 		struct ExperimentalCache : public SeedCache {	// Testing improved FastArrayCache
 			PTable* GetPTable(unsigned int F_Seed) override;
+			CacheType GetCacheType() override;
+			size_t 	GetCacheSize() override;
 			void Clear() override;
 		
 		private:
@@ -112,6 +125,3 @@ namespace KNoise {
 	};
 
 }
-
-
-#endif

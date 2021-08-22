@@ -7,7 +7,7 @@
 
 int main() {
     KNoise::Perlin Noise;
-    Noise.SetCacheType(Noise.Experimental);
+    Noise.SetCacheType(Noise.Single);
 
     size_t y = 0;
     size_t seed = 200000;
@@ -65,6 +65,7 @@ int main() {
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
         std::cout << std::endl;
         y++;
+        std::cout << Noise.GetCacheSize() << "   " << Noise.GetCacheType();
     }
     
     

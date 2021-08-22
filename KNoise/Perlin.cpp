@@ -171,6 +171,11 @@ double KNoise::Perlin::GetFractal(Vec3d F_Position, unsigned int F_Seed, unsigne
 
 
 
+int KNoise::Perlin::GetCacheType() 		{ return Seed->GetCacheType(); }
+size_t 	KNoise::Perlin::GetCacheSize() 	{ return Seed->GetCacheSize(); }
+
+
+
 KNoise::Perlin::SeedCache::PTable::PTable() { Permutation.reserve(256); }	// Allocate memory for permutation
 KNoise::Perlin::SeedCache::PTable::PTable(unsigned int F_Seed) {
 	Seed = F_Seed;
@@ -190,6 +195,9 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::DisabledCache::GetPTable(unsi
 	return new PTable(F_Seed);
 }
 
+KNoise::Perlin::CacheType KNoise::Perlin::DisabledCache::GetCacheType() 	{ return Disabled; }
+size_t 	KNoise::Perlin::DisabledCache::GetCacheSize() 						{ return 0; }
+
 void KNoise::Perlin::DisabledCache::Clear() {}
 
 
@@ -198,6 +206,9 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::SingleCache::GetPTable(unsign
 	if(LastPTable.Seed != F_Seed) LastPTable = PTable(F_Seed);
 	return &LastPTable;
 }
+
+KNoise::Perlin::CacheType KNoise::Perlin::SingleCache::GetCacheType() 		{ return Single; }
+size_t 	KNoise::Perlin::SingleCache::GetCacheSize() 						{ return sizeof(LastPTable); }
 
 void KNoise::Perlin::SingleCache::Clear() {
 	LastPTable = 0;
@@ -217,6 +228,9 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ArrayCache::GetPTable(unsigne
 	return &Cache[Cache.size() - 1];													// Return PTable pointer
 }
 
+KNoise::Perlin::CacheType KNoise::Perlin::ArrayCache::GetCacheType() 		{ return Array; }
+size_t 	KNoise::Perlin::ArrayCache::GetCacheSize() 							{ return sizeof(Cache); }
+
 void KNoise::Perlin::ArrayCache::Clear() {
 	Cache.clear();
 }
@@ -230,6 +244,9 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::FastArrayCache::GetPTable(uns
 	return &Cache[F_Seed-FirstSeed];																		// Return PTable cache array pointer
 }
 
+KNoise::Perlin::CacheType KNoise::Perlin::FastArrayCache::GetCacheType() 	{ return FastArray; }
+size_t 	KNoise::Perlin::FastArrayCache::GetCacheSize() 						{ return sizeof(Cache); }
+
 void KNoise::Perlin::FastArrayCache::Clear() {
 	Cache.clear();
 }
@@ -242,6 +259,9 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ExperimentalCache::GetPTable(
 	if (Cache[F_Seed-FirstSeed].Created == false) { Cache[F_Seed-FirstSeed] = PTable(F_Seed); }				// If PTable is not generated generate PTable
 	return &Cache[F_Seed-FirstSeed];																		// Return PTable cache array pointer
 }
+
+KNoise::Perlin::CacheType KNoise::Perlin::ExperimentalCache::GetCacheType() { return Experimental; }
+size_t 	KNoise::Perlin::ExperimentalCache::GetCacheSize() 					{ return sizeof(Cache); }
 
 void KNoise::Perlin::ExperimentalCache::Clear() {
 	Cache.clear();
