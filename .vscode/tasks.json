@@ -2,8 +2,8 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "Build All",
-            "command": "${workspaceFolder}/.vscode/build-all.sh",
+            "label": "Build Windows",
+            "command": "${workspaceFolder}/.vscode/build-windows.bat",
             "args": [
             ],
             "options": {
@@ -16,12 +16,12 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "Build sandbox and engine."
+            "detail": "Build sandbox and engine for Windows."
         },
         {
             "type": "shell",
-            "label": "Build Windows64",
-            "command": "${workspaceFolder}/.vscode/build-windows64.sh",
+            "label": "Build Linux",
+            "command": "${workspaceFolder}/.vscode/build-linux.sh",
             "args": [
             ],
             "options": {
@@ -34,25 +34,7 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "Build sandbox and engine for Windows64."
-        },
-        {
-            "type": "shell",
-            "label": "Build Linux64",
-            "command": "${workspaceFolder}/.vscode/build-linux64.sh",
-            "args": [
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "detail": "Build sandbox and engine for Linux64."
+            "detail": "Build sandbox and engine for Linux."
         },
     ],
     "version": "2.0.0"

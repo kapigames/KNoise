@@ -1,4 +1,4 @@
-PLATFORM="linux64"
+PLATFORM="linux"
 CPPSTD="c++17"
 
 echo Preparing compile for $PLATFORM...

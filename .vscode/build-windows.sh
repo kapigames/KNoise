@@ -1,4 +1,4 @@
-PLATFORM="windows64"
+PLATFORM="windows"
 CPPSTD="c++17"
 
 echo Preparing compile for $PLATFORM...
