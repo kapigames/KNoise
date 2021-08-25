@@ -51,7 +51,10 @@ namespace KNoise {
 				PTable();								// Allocate memory for PTable
 			};
 
+
 			// These functions are implemented by other cache types
+			virtual ~SeedCache() = 0;							// Virtual destructor (added in 2.2 to fix some compilation warnings on clang)
+
 			virtual PTable* GetPTable(unsigned int F_Seed) = 0;	// This function returns PTable for given seed
 			virtual CacheType GetCacheType() = 0;				// Returns cache type
 			virtual size_t 	GetCacheSize() = 0;					// Returns cache size (if any)
@@ -61,6 +64,8 @@ namespace KNoise {
 
 
 		struct DisabledCache : public SeedCache {		// Disabled
+			~DisabledCache() override;
+
 			PTable* GetPTable(unsigned int F_Seed) override;
 			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
@@ -68,6 +73,8 @@ namespace KNoise {
 		};
 
 		struct SingleCache : public SeedCache {			// Stores last generated PTable
+			~SingleCache() override;
+
 			PTable* GetPTable(unsigned int F_Seed) override;
 			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
@@ -78,6 +85,8 @@ namespace KNoise {
 		};
 
 		struct ArrayCache : public SeedCache {			// Stores all generated PTables and thes searches through them can be slow with alot of cached PTables
+			~ArrayCache() override;
+
 			PTable* GetPTable(unsigned int F_Seed) override;
 			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
@@ -88,6 +97,8 @@ namespace KNoise {
 		};
 
 		struct FastArrayCache : public SeedCache {		// Same as upper cache type but seed is index of cache array removing the need for searching
+			~FastArrayCache() override;
+
 			PTable* GetPTable(unsigned int F_Seed) override;
 			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
@@ -99,6 +110,8 @@ namespace KNoise {
 		};
 
 		struct ExperimentalCache : public SeedCache {	// Testing improved FastArrayCache
+			~ExperimentalCache() override;
+
 			PTable* GetPTable(unsigned int F_Seed) override;
 			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;

@@ -190,6 +190,7 @@ KNoise::Perlin::SeedCache::PTable::PTable(unsigned int F_Seed) {
 }
 
 
+KNoise::Perlin::DisabledCache::~DisabledCache() {}
 
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::DisabledCache::GetPTable(unsigned int F_Seed) {
 	return new PTable(F_Seed);
@@ -201,6 +202,8 @@ size_t 	KNoise::Perlin::DisabledCache::GetCacheSize() 						{ return 0; }
 void KNoise::Perlin::DisabledCache::Clear() {}
 
 
+
+KNoise::Perlin::SingleCache::~SingleCache() {}
 
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::SingleCache::GetPTable(unsigned int F_Seed) {
 	if(LastPTable.Seed != F_Seed) LastPTable = PTable(F_Seed);
@@ -215,6 +218,8 @@ void KNoise::Perlin::SingleCache::Clear() {
 }
 
 
+
+KNoise::Perlin::ArrayCache::~ArrayCache() {}
 
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ArrayCache::GetPTable(unsigned int F_Seed) {
 	for (unsigned int i = 0; i < Cache.size(); i++)	// Cycle through cache array
@@ -237,6 +242,8 @@ void KNoise::Perlin::ArrayCache::Clear() {
 
 
 
+KNoise::Perlin::FastArrayCache::~FastArrayCache() {}
+
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::FastArrayCache::GetPTable(unsigned int F_Seed) {
 	if (F_Seed < FirstSeed) { FirstSeed = F_Seed; Clear(); }	// TODO: repleace Clear() with something more eficient like shifting vector by needed amount
 	if (F_Seed+1-FirstSeed > Cache.size()) { Cache.resize(F_Seed-FirstSeed + PERLIN_ALLOCATION_SIZE); }		// If seed is bigger than cache array resize array
@@ -252,6 +259,8 @@ void KNoise::Perlin::FastArrayCache::Clear() {
 }
 
 
+
+KNoise::Perlin::ExperimentalCache::~ExperimentalCache() {}
 
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ExperimentalCache::GetPTable(unsigned int F_Seed) {
 	if (F_Seed < FirstSeed) { FirstSeed = F_Seed; Clear(); }	// TODO: repleace Clear() with something more eficient like shifting vector by needed amount

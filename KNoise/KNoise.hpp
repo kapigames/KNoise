@@ -1,6 +1,6 @@
 #pragma once
 
-#define __KNOISE__ 2.1
+#define __KNOISE__ 2.2
 
 #include <iostream>
 #include <string>
