@@ -190,6 +190,8 @@ KNoise::Perlin::SeedCache::PTable::PTable(unsigned int F_Seed) {
 }
 
 
+KNoise::Perlin::SeedCache::~SeedCache() {}
+
 KNoise::Perlin::DisabledCache::~DisabledCache() {}
 
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::DisabledCache::GetPTable(unsigned int F_Seed) {
