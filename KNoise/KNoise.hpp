@@ -1,14 +1,17 @@
 #pragma once
 
-#define __KNOISE__ 2.3
+#define __KNOISE__ 2.4
 
 #include <iostream>
 #include <string>
+#include <codecvt>
+#include <locale>
 
 
 namespace KNoise {
 
-    unsigned int ToSeed(std::string F_Text);    // Converts string to seed
+    unsigned int ToSeed(std::string F_Text);        // Converts string to seed
+    unsigned int ToSeedW(std::wstring F_Text);      // Converts wstring to seed
 
     struct Vec3f {
         Vec3f(float F_x,float F_y,float F_z) { x=F_x; y=F_y; z=F_z; }
