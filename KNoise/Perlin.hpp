@@ -11,6 +11,7 @@ namespace KNoise {
     struct Perlin {
 
 		Perlin();
+		~Perlin();
 
 		enum CacheType {		// Seed cache types, Deafult is recomended
 			Disabled,			// Seed cache is disabled
@@ -31,8 +32,10 @@ namespace KNoise {
 
     private:
 
-		struct SeedCache {								// Main class for other cache types
+		// Main cache class
+		struct SeedCache {
 
+			// Cache needs to generate PTable and return it in GetPTable
 			struct PTable {								// Permutation Table ( array with random numbers )
 				unsigned int Seed = 0;					// Generated PTable seed
 				std::vector<unsigned int> Permutation;	// Permutation
@@ -42,11 +45,11 @@ namespace KNoise {
 				PTable();								// Allocate memory for PTable
 			};
 
-
-			// These functions are implemented by other cache types
-			virtual ~SeedCache() = 0;							// Virtual destructor (added in 2.2 to fix some compilation warnings on clang)
-
+			// Set type to CacheType enum in constructor
 			CacheType Type;
+
+			// These functions are implemented by cache implementation
+			virtual ~SeedCache() = 0;							// Virtual destructor leave it empty if you dont use it
 
 			virtual PTable* GetPTable(unsigned int F_Seed) = 0;	// This function returns PTable for given seed
 			virtual size_t 	GetCacheSize() = 0;					// Returns cache size (if any)
@@ -55,18 +58,17 @@ namespace KNoise {
 		};
 
 
-		struct DisabledCache : public SeedCache {		// Disabled
+		// Cache implementations:
+		struct DisabledCache : public SeedCache {
 			DisabledCache();
-			~DisabledCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			size_t 	GetCacheSize() override;
 			void Clear() override;
 		};
 
-		struct ArrayCache : public SeedCache {			// Stores all generated PTables and thes searches through them can be slow with alot of cached PTables
+		struct ArrayCache : public SeedCache {
 			ArrayCache();
-			~ArrayCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			size_t 	GetCacheSize() override;
@@ -76,9 +78,8 @@ namespace KNoise {
 			std::vector<PTable> Cache;
 		};
 
-		struct FastArrayCache : public SeedCache {		// Same as upper cache type but seed is index of cache array removing the need for searching
+		struct FastArrayCache : public SeedCache {
 			FastArrayCache();
-			~FastArrayCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			size_t 	GetCacheSize() override;
@@ -89,9 +90,8 @@ namespace KNoise {
 			std::vector<PTable> Cache;
 		};
 
-		struct ExperimentalCache : public SeedCache {	// Testing improved FastArrayCache
+		struct ExperimentalCache : public SeedCache {
 			ExperimentalCache();
-			~ExperimentalCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			size_t 	GetCacheSize() override;
@@ -103,7 +103,8 @@ namespace KNoise {
 		};
 
 
-		std::unique_ptr<SeedCache> Seed;	// Current cache type
+		// Cache implementation
+		SeedCache* Seed = NULL;
 
 		// These functions are used by Get() function to generate noise
 		float Fade(float t);
