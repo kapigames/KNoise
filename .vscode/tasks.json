@@ -2,12 +2,12 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "Build Windows",
-            "command": "${workspaceFolder}/.vscode/build-windows.bat",
+            "label": "Build",
+            "command": "mkdir build;cd build;cmake ../;cmake --build .",
             "args": [
             ],
             "options": {
-                "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}/"
             },
             "problemMatcher": [
                 "$gcc"
@@ -16,26 +16,8 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "Build sandbox and engine for Windows."
-        },
-        {
-            "type": "shell",
-            "label": "Build Linux",
-            "command": "${workspaceFolder}/.vscode/build-linux.sh",
-            "args": [
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "detail": "Build sandbox and engine for Linux."
-        },
+            "detail": "Configure and build."
+        }
     ],
     "version": "2.0.0"
 }

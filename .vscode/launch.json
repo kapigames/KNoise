@@ -5,25 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Build Linux64",
+            "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/linux64/Sandbox/Sandbox",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
+            "program": "${workspaceFolder}/build/Sandbox/Sandbox",
+            "cwd": ".",
+            "externalConsole": true,
             "MIMode": "gdb",
+            "preLaunchTask": "${defaultBuildTask}",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ],
-            "preLaunchTask": "Build Linux64",
-            "miDebuggerPath": "/usr/bin/gdb"
+            ]
         }
     ]
 }
