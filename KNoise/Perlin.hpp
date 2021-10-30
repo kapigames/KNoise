@@ -1,11 +1,6 @@
 #pragma once
 
 #include "KNoise.hpp"
-#include <vector>
-#include <random>
-#include <algorithm>
-#include <numeric>
-#include <memory>
 
 
 #define PERLIN_ALLOCATION_SIZE 32

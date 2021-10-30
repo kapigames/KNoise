@@ -1,11 +1,7 @@
 #pragma once
 
-#define __KNOISE__ 2.4
-
-#include <iostream>
-#include <string>
-#include <codecvt>
-#include <locale>
+#define __KNOISE__ 2.5
+#include "PCH.hpp"
 
 
 namespace KNoise {
