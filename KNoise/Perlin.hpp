@@ -14,24 +14,20 @@ namespace KNoise {
 
 		enum CacheType {		// Seed cache types, Deafult is recomended
 			Disabled,			// Seed cache is disabled
-			Single,				// Only one generated PTable is cached
 			Array,				// PTables are stored in array, array needs to be searched to find cached PTable
 			FastArray,			// Seed is index of cache array removing need for searching array
 								// Faster with large numbers of cached seeds but uses more memory if used incorectly
 			Experimental		// Experimental cache implementations that will probably be implemented later after fixing bugs
-								// Currently nothing is tested here if selected behaves as single cache
+								// Currently nothing is tested here if selected behaves as FastArray cache
 		};
 
 		void SetCacheType(int F_CacheType);						// Sets cache type
 		int GetCacheType();										// Returns cache type
-		size_t 	GetCacheSize();									// Returns cache size (if any)
+		size_t GetCacheSize();									// Returns cache size (if any)
 		void ClearCache();										// Clears cache (dosent do anything in some cache types)
 		
 		float Get(Vec3f F_Position, unsigned int F_Seed);		// Get noise value for set seed and position
 		double Get(Vec3d F_Position, unsigned int F_Seed);		// Get double precision noise value for set seed and position
-
-		float GetFractal(Vec3f F_Position, unsigned int F_Seed, unsigned int F_Quality);	// IDK if it works but i hope so
-		double GetFractal(Vec3d F_Position, unsigned int F_Seed, unsigned int F_Quality);	// IDK if it works but i hope so
 
     private:
 
@@ -50,8 +46,9 @@ namespace KNoise {
 			// These functions are implemented by other cache types
 			virtual ~SeedCache() = 0;							// Virtual destructor (added in 2.2 to fix some compilation warnings on clang)
 
+			CacheType Type;
+
 			virtual PTable* GetPTable(unsigned int F_Seed) = 0;	// This function returns PTable for given seed
-			virtual CacheType GetCacheType() = 0;				// Returns cache type
 			virtual size_t 	GetCacheSize() = 0;					// Returns cache size (if any)
 			virtual void 	Clear() = 0;						// This function clears cache (if there is any cache)
 
@@ -59,31 +56,19 @@ namespace KNoise {
 
 
 		struct DisabledCache : public SeedCache {		// Disabled
+			DisabledCache();
 			~DisabledCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
-			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
 			void Clear() override;
-		};
-
-		struct SingleCache : public SeedCache {			// Stores last generated PTable
-			~SingleCache() override;
-
-			PTable* GetPTable(unsigned int F_Seed) override;
-			CacheType GetCacheType() override;
-			size_t 	GetCacheSize() override;
-			void Clear() override;
-		
-		private:
-			PTable LastPTable;
 		};
 
 		struct ArrayCache : public SeedCache {			// Stores all generated PTables and thes searches through them can be slow with alot of cached PTables
+			ArrayCache();
 			~ArrayCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
-			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
 			void Clear() override;
 		
@@ -92,10 +77,10 @@ namespace KNoise {
 		};
 
 		struct FastArrayCache : public SeedCache {		// Same as upper cache type but seed is index of cache array removing the need for searching
+			FastArrayCache();
 			~FastArrayCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
-			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
 			void Clear() override;
 		
@@ -105,10 +90,10 @@ namespace KNoise {
 		};
 
 		struct ExperimentalCache : public SeedCache {	// Testing improved FastArrayCache
+			ExperimentalCache();
 			~ExperimentalCache() override;
 
 			PTable* GetPTable(unsigned int F_Seed) override;
-			CacheType GetCacheType() override;
 			size_t 	GetCacheSize() override;
 			void Clear() override;
 		
@@ -125,7 +110,7 @@ namespace KNoise {
 		float Lerp(float t, float a, float b);
 		float Grad(int hash, float x, float y, float z);
 
-		// Double precision version
+		// Double precision versions
 		double FadeD(double t);
 		double LerpD(double t, double a, double b);
 		double GradD(int hash, double x, double y, double z);

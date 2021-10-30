@@ -7,7 +7,6 @@
 
 int main() {
     KNoise::Perlin Noise;
-    Noise.SetCacheType(Noise.Single);
 
     size_t y = 0;
     size_t seed = 200000;
