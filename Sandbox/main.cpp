@@ -117,7 +117,7 @@ int main() {
     test_noise(&Noise);
 
     std::cout << "Index" << std::endl;
-    Noise.SetCacheType(Noise.FastArray);
+    Noise.SetCacheType(Noise.Index);
     test_noise(&Noise);
 
 
@@ -133,7 +133,7 @@ int main() {
     test_perf(&Noise);
 
     std::cout << "Index" << std::endl;
-    Noise.SetCacheType(Noise.FastArray);
+    Noise.SetCacheType(Noise.Index);
     test_perf(&Noise);
 
 
