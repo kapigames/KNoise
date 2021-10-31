@@ -173,7 +173,7 @@ KNoise::Perlin::SeedCache::PTable::PTable(unsigned int F_Seed) {
 
 KNoise::Perlin::SeedCache::~SeedCache() {}
 
-KNoise::Perlin::SingleCache::SingleCache() { Type = Disabled; }
+KNoise::Perlin::SingleCache::SingleCache() { Type = Single; }
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::SingleCache::GetPTable(unsigned int F_Seed) {
 	if(Last.Created != true || Last.Seed != F_Seed) {
 		Last = PTable(F_Seed);
@@ -204,7 +204,7 @@ void KNoise::Perlin::ArrayCache::Clear() {
 
 
 
-KNoise::Perlin::IndexCache::IndexCache() { Type = FastArray; }
+KNoise::Perlin::IndexCache::IndexCache() { Type = Index; }
 KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::IndexCache::GetPTable(unsigned int F_Seed) {
 	if (F_Seed < FirstSeed) { FirstSeed = F_Seed; Clear(); }	// TODO: repleace Clear() with something more eficient like shifting vector by needed amount
 	if (F_Seed+1-FirstSeed > Cache.size()) { Cache.resize(F_Seed-FirstSeed + PERLIN_ALLOCATION_SIZE); }		// If seed is bigger than cache array resize array
