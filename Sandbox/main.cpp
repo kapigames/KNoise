@@ -104,8 +104,8 @@ void test_real_perf(Perlin* Noise) {
 
 
 void test_ToSeed() {
-    std::cout << "string" << std::endl;
-    if(ToSeed("ąbć") != ToSeed(U"ąbć")) {
+    std::cout << "u32string" << std::endl;
+    if(86917 != ToSeed(U"ąbć")) {
         exit(3);
     }
 
@@ -114,14 +114,14 @@ void test_ToSeed() {
         exit(4);
     }
 
-    std::cout << "u32string" << std::endl;
-    if(ToSeed(U"ąbć") != ToSeed(U"ąbć")) {
-        exit(5);
-    }
-
     std::cout << "wstring" << std::endl;
     if(ToSeed(L"ąbć") != ToSeed(U"ąbć")) {
         exit(6);
+    }
+
+    std::cout << "string" << std::endl;
+    if(ToSeed("ąbć") != ToSeed(U"ąbć")) {
+        exit(3);
     }
 }
 
