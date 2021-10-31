@@ -17,6 +17,25 @@
                 "isDefault": true
             },
             "detail": "Configure and build."
+        },
+
+        {
+            "type": "shell",
+            "label": "Build Debug",
+            "command": "mkdir build;cd build;cmake ../ -DCMAKE_BUILD_TYPE=Debug;cmake --build .",
+            "args": [
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Configure and build."
         }
     ],
     "version": "2.0.0"
