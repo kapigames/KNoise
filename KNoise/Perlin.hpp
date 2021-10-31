@@ -14,9 +14,9 @@ namespace KNoise {
 		~Perlin();
 
 		enum CacheType {		// Seed cache types, Deafult is recomended
-			Disabled,			// Seed cache is disabled
+			Single,				// Saves last PTable
 			Array,				// PTables are stored in array, array needs to be searched to find cached PTable
-			FastArray,			// Seed is index of cache array removing need for searching array
+			Index,				// Seed is index of cache array removing need for searching array
 								// Faster with large numbers of cached seeds but uses more memory if used incorectly
 			Experimental		// Experimental cache implementations that will probably be implemented later after fixing bugs
 								// Currently nothing is tested here if selected behaves as FastArray cache
@@ -59,12 +59,15 @@ namespace KNoise {
 
 
 		// Cache implementations:
-		struct DisabledCache : public SeedCache {
-			DisabledCache();
+		struct SingleCache : public SeedCache {
+			SingleCache();
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			size_t 	GetCacheSize() override;
 			void Clear() override;
+
+		private:
+			PTable Last;
 		};
 
 		struct ArrayCache : public SeedCache {
@@ -78,8 +81,8 @@ namespace KNoise {
 			std::vector<PTable> Cache;
 		};
 
-		struct FastArrayCache : public SeedCache {
-			FastArrayCache();
+		struct IndexCache : public SeedCache {
+			IndexCache();
 
 			PTable* GetPTable(unsigned int F_Seed) override;
 			size_t 	GetCacheSize() override;

@@ -20,16 +20,16 @@ void KNoise::Perlin::SetCacheType(int F_CacheType) {
 
 	switch (F_CacheType)
 	{
-	case Disabled:
-		Seed = new DisabledCache;
+	case Single:
+		Seed = new SingleCache;
 		break;
 	
 	case Array:
 		Seed = new ArrayCache;
 		break;
 	
-	case FastArray:
-		Seed = new FastArrayCache;
+	case Index:
+		Seed = new IndexCache;
 		break;
 	
 	case Experimental:
@@ -173,12 +173,15 @@ KNoise::Perlin::SeedCache::PTable::PTable(unsigned int F_Seed) {
 
 KNoise::Perlin::SeedCache::~SeedCache() {}
 
-KNoise::Perlin::DisabledCache::DisabledCache() { Type = Disabled; }
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::DisabledCache::GetPTable(unsigned int F_Seed) {
-	return new PTable(F_Seed);
+KNoise::Perlin::SingleCache::SingleCache() { Type = Disabled; }
+KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::SingleCache::GetPTable(unsigned int F_Seed) {
+	if(Last.Created != true || Last.Seed != F_Seed) {
+		Last = PTable(F_Seed);
+	}
+	return &Last;
 }
-size_t 	KNoise::Perlin::DisabledCache::GetCacheSize() 						{ return 0; }
-void KNoise::Perlin::DisabledCache::Clear() {}
+size_t 	KNoise::Perlin::SingleCache::GetCacheSize() 						{ return sizeof(Last); }
+void KNoise::Perlin::SingleCache::Clear() {}
 
 
 
@@ -201,15 +204,15 @@ void KNoise::Perlin::ArrayCache::Clear() {
 
 
 
-KNoise::Perlin::FastArrayCache::FastArrayCache() { Type = FastArray; }
-KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::FastArrayCache::GetPTable(unsigned int F_Seed) {
+KNoise::Perlin::IndexCache::IndexCache() { Type = FastArray; }
+KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::IndexCache::GetPTable(unsigned int F_Seed) {
 	if (F_Seed < FirstSeed) { FirstSeed = F_Seed; Clear(); }	// TODO: repleace Clear() with something more eficient like shifting vector by needed amount
 	if (F_Seed+1-FirstSeed > Cache.size()) { Cache.resize(F_Seed-FirstSeed + PERLIN_ALLOCATION_SIZE); }		// If seed is bigger than cache array resize array
 	if (Cache[F_Seed-FirstSeed].Created == false) { Cache[F_Seed-FirstSeed] = PTable(F_Seed); }				// If PTable is not generated generate PTable
 	return &Cache[F_Seed-FirstSeed];																		// Return PTable cache array pointer
 }
-size_t 	KNoise::Perlin::FastArrayCache::GetCacheSize() 						{ return sizeof(Cache); }
-void KNoise::Perlin::FastArrayCache::Clear() {
+size_t 	KNoise::Perlin::IndexCache::GetCacheSize() 						{ return sizeof(Cache); }
+void KNoise::Perlin::IndexCache::Clear() {
 	Cache.clear();
 }
 
