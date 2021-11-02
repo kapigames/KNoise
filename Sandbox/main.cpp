@@ -127,6 +127,78 @@ void test_ToSeed() {
 
 
 
+void test_thread(Perlin* Noise) {
+    for (size_t i = 0; i < 1000000; i++)
+    {
+        Noise->Get(Vec1f(i/100.f), 123);
+    }
+}
+
+
+void test_threads(Perlin* Noise) {
+    std::thread thread1, thread2;
+    std::cout << std::endl << "Starting threads..." << std::endl;
+
+
+    Noise->SetCacheType(Noise->Single);
+    thread1 = std::thread(test_thread, Noise);
+    thread2 = std::thread(test_thread, Noise);
+    
+    thread1.join();
+    thread2.join();
+
+
+    Noise->SetCacheType(Noise->Array);
+    thread1 = std::thread(test_thread, Noise);
+    thread2 = std::thread(test_thread, Noise);
+
+    thread1.join();
+    thread2.join();
+
+
+    Noise->SetCacheType(Noise->Index);
+    thread1 = std::thread(test_thread, Noise);
+    thread2 = std::thread(test_thread, Noise);
+    
+    thread1.join();
+    thread2.join();
+}
+
+
+
+void thread_perf_scaleing_thread(Perlin* Noise) {
+    for (size_t i = 0; i < 1000000; i++)
+    {
+        Noise->Get(Vec1f(i/100.f), 123);
+    }
+}
+
+
+void thread_perf_scaleing(Perlin* Noise) {
+    for (size_t i = 1; i < std::thread::hardware_concurrency()+1; i++)
+    {
+        std::vector<std::thread> t;
+        auto t1 = high_resolution_clock::now();
+        for (size_t threads = 0; threads < i; threads++)
+        {
+            t.push_back(std::thread(thread_perf_scaleing_thread, Noise));
+        }
+
+        for (size_t threadss = 0; threadss < i; threadss++)
+        {
+            t[threadss].join();
+        }
+
+        auto t2 = high_resolution_clock::now();
+
+        duration<double, std::milli> ms_double = t2 - t1;
+        std::cout << i <<  " threads finished in " << ms_double.count() << "ms, ";
+        std::cout << "it took " << ms_double.count()/i << "ms to calculate 1M noise values" << std::endl;
+    }
+}
+
+
+
 int main() {
     std::cout << "Testing StringToSeed..." << std::endl;
     test_ToSeed();
@@ -150,6 +222,11 @@ int main() {
     test_noise(&Noise);
 
 
+    std::cout << std::endl << "Testing if thread save..." << std::endl;
+    test_threads(&Noise);
+
+    std::cout << std::endl << "Testing threads overhead..." << std::endl;
+    thread_perf_scaleing(&Noise);
 
     std::cout << std::endl << "Testing cache performance..." << std::endl;
 

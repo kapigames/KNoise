@@ -55,6 +55,9 @@ namespace KNoise {
 			virtual size_t 	GetCacheSize() = 0;					// Returns cache size (if any)
 			virtual void 	Clear() = 0;						// This function clears cache (if there is any cache)
 
+			// TODO
+			//std::vector<std::thread> Requests;
+			//void RequestPTable(unsigned int F_Seed, PTable* Return);
 		};
 
 
@@ -108,6 +111,7 @@ namespace KNoise {
 
 		// Cache implementation
 		SeedCache* Seed = NULL;
+		std::mutex SeedLock;
 
 		// These functions are used by Get() function to generate noise
 		float Fade(float t);

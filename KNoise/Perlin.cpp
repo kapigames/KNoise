@@ -50,7 +50,9 @@ void KNoise::Perlin::ClearCache() {
 
 
 float KNoise::Perlin::Get(V3f F_Position, unsigned int F_Seed) {
+	SeedLock.lock();
 	SeedCache::PTable* Permutation = Seed->GetPTable(F_Seed); // Generate new permutation layer when seed changed
+	SeedLock.unlock();
 
 	// Find the unit cube that contains the point
 	int X = (int)floor(F_Position.x) & 255;
@@ -66,6 +68,7 @@ float KNoise::Perlin::Get(V3f F_Position, unsigned int F_Seed) {
 	float u = Fade(F_Position.x);
 	float v = Fade(F_Position.y);
 	float w = Fade(F_Position.z);
+	
 
 	// Hash coordinates of the 8 cube corners
 	int A = Permutation->Permutation[X] + Y;
@@ -101,7 +104,9 @@ float KNoise::Perlin::Grad(int hash, float x, float y, float z) {
 
 
 double KNoise::Perlin::Get(V3d F_Position, unsigned int F_Seed) {
+	SeedLock.lock();
 	SeedCache::PTable* Permutation = Seed->GetPTable(F_Seed); // Generate new permutation layer when seed changed
+	SeedLock.unlock();
 
 	// Find the unit cube that contains the point
 	int X = (int)floor(F_Position.x) & 255;
@@ -194,8 +199,8 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::ArrayCache::GetPTable(unsigne
 		}
 	}
 	Cache.reserve((unsigned int)ceil(Cache.size() / PERLIN_ALLOCATION_SIZE) * PERLIN_ALLOCATION_SIZE);	// If not found allocate more memory in cache array
-	Cache.push_back(PTable(F_Seed));													// Generate new PTable
-	return &Cache[Cache.size() - 1];													// Return PTable pointer
+	Cache.push_back(PTable(F_Seed));										// Generate new PTable
+	return &Cache[Cache.size() - 1];										// Return PTable pointer
 }
 size_t 	KNoise::Perlin::ArrayCache::GetCacheSize() 							{ return sizeof(Cache); }
 void KNoise::Perlin::ArrayCache::Clear() {
@@ -209,7 +214,7 @@ KNoise::Perlin::SeedCache::PTable* KNoise::Perlin::IndexCache::GetPTable(unsigne
 	if (F_Seed < FirstSeed) { FirstSeed = F_Seed; Clear(); }	// TODO: repleace Clear() with something more eficient like shifting vector by needed amount
 	if (F_Seed+1-FirstSeed > Cache.size()) { Cache.resize(F_Seed-FirstSeed + PERLIN_ALLOCATION_SIZE); }		// If seed is bigger than cache array resize array
 	if (Cache[F_Seed-FirstSeed].Created == false) { Cache[F_Seed-FirstSeed] = PTable(F_Seed); }				// If PTable is not generated generate PTable
-	return &Cache[F_Seed-FirstSeed];																		// Return PTable cache array pointer
+	return &Cache[F_Seed-FirstSeed];																							// Return PTable cache array pointer
 }
 size_t 	KNoise::Perlin::IndexCache::GetCacheSize() 						{ return sizeof(Cache); }
 void KNoise::Perlin::IndexCache::Clear() {
