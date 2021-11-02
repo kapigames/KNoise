@@ -27,8 +27,8 @@ namespace KNoise {
 		size_t GetCacheSize();									// Returns cache size (if any)
 		void ClearCache();										// Clears cache (dosent do anything in some cache types)
 		
-		float Get(Vec3f F_Position, unsigned int F_Seed);		// Get noise value for set seed and position
-		double Get(Vec3d F_Position, unsigned int F_Seed);		// Get double precision noise value for set seed and position
+		float Get(V3f F_Position, unsigned int F_Seed);		// Get noise value for set seed and position
+		double Get(V3d F_Position, unsigned int F_Seed);		// Get double precision noise value for set seed and position
 
     private:
 
