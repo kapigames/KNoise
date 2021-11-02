@@ -49,7 +49,7 @@ void KNoise::Perlin::ClearCache() {
 
 
 
-float KNoise::Perlin::Get(Vec3f F_Position, unsigned int F_Seed) {
+float KNoise::Perlin::Get(V3f F_Position, unsigned int F_Seed) {
 	SeedCache::PTable* Permutation = Seed->GetPTable(F_Seed); // Generate new permutation layer when seed changed
 
 	// Find the unit cube that contains the point
@@ -100,7 +100,7 @@ float KNoise::Perlin::Grad(int hash, float x, float y, float z) {
 
 
 
-double KNoise::Perlin::Get(Vec3d F_Position, unsigned int F_Seed) {
+double KNoise::Perlin::Get(V3d F_Position, unsigned int F_Seed) {
 	SeedCache::PTable* Permutation = Seed->GetPTable(F_Seed); // Generate new permutation layer when seed changed
 
 	// Find the unit cube that contains the point

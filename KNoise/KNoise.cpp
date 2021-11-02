@@ -48,3 +48,12 @@ unsigned int KNoise::ToSeed(std::u32string F_Text) {
 
     return Seed;
 }
+
+
+KNoise::V3f KNoise::Vec3f(float x, float y, float z)    { V3f v; v.x=x; v.y=y; v.z=z; return v; }
+KNoise::V3f KNoise::Vec2f(float x, float y)             { V3f v; v.x=x; v.y=y; v.z=0; return v; }
+KNoise::V3f KNoise::Vec1f(float x)                      { V3f v; v.x=x; v.y=0; v.z=0; return v; }
+
+KNoise::V3d KNoise::Vec3d(double x, double y, double z) { V3d v; v.x=x; v.y=y; v.z=z; return v; }
+KNoise::V3d KNoise::Vec2d(double x, double y)           { V3d v; v.x=x; v.y=y; v.z=0; return v; }
+KNoise::V3d KNoise::Vec1d(double x)                     { V3d v; v.x=x; v.y=0; v.z=0; return v; }

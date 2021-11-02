@@ -1,6 +1,6 @@
 #pragma once
 
-#define __KNOISE__ 2.5
+#define __KNOISE__ 2.6
 #include "PCH.hpp"
 
 
@@ -11,13 +11,24 @@ namespace KNoise {
     unsigned int ToSeed(std::u32string F_Text);     // Converts u32string to seed
 
 
-    struct Vec3f {
-        Vec3f(float F_x,float F_y,float F_z) { x=F_x; y=F_y; z=F_z; }
+    // Pre declarations
+    // Float vectors
+    struct V3f {
         float x, y, z;
     };
 
-    struct Vec3d {
-        Vec3d(double F_x,double F_y,double F_z) { x=F_x; y=F_y; z=F_z; }
+
+    // Double vectors
+    struct V3d{
         double x, y, z;
     };
+
+
+    V3f Vec3f(float x, float y, float z);
+    V3f Vec2f(float x, float y);
+    V3f Vec1f(float x);
+
+    V3d Vec3d(double x, double y, double z);
+    V3d Vec2d(double x, double y);
+    V3d Vec1d(double x);
 }
